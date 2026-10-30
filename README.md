@@ -39,6 +39,7 @@ php spark tcrud:publish
 php spark tcrud:config
 php spark tcrud:database
 php spark tcrud:example
+```
 
 ## Documentación completa
 
