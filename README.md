@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # T-CRUD
 
 CRUD virtual para CodeIgniter 4 con Bootstrap 5.
@@ -38,3 +39,5 @@ php spark tcrud:publish
 php spark tcrud:config
 php spark tcrud:database
 php spark tcrud:example
+
+b12708a5ba483e9b940f83d5ba3aef1169f9fc48
