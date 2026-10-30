@@ -40,4 +40,31 @@ php spark tcrud:config
 php spark tcrud:database
 php spark tcrud:example
 
+## Documentación completa
+
+La documentación completa está disponible en el archivo [`docs/tcrud-documentacion.html`](docs/tcrud-documentacion.html).
+
+Ábrelo en Word o Chrome para exportarlo a PDF.
+
+Incluye:
+
+- Introducción
+- Instalación
+- Configuración
+- Uso básico
+- API completa de todos los métodos
+- Tipos de campo
+- Relaciones (1 a N, N a N, dependientes)
+- Callbacks (16)
+- Acciones y botones
+- Exportación
+- Edición en línea
+- Campos ocultos
+- Filtros
+- Soft deletes
+- Cacheo
+- Internacionalización
+- Ejemplos completos
+- Guía para IA
+
 b12708a5ba483e9b940f83d5ba3aef1169f9fc48

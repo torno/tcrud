@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-CRUD — Documentación Completa</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 60px;
+            background: #fff;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #0d6efd;
+            border-bottom: 3px solid #0d6efd;
+            padding-bottom: 10px;
+            margin-top: 50px;
+        }
+        h1:first-of-type { margin-top: 0; }
+        h2 {
+            font-size: 1.8em;
+            color: #0a58ca;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+        h3 {
+            font-size: 1.3em;
+            color: #084298;
+            margin-top: 30px;
+            background: #e7f1ff;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        h4 {
+            font-size: 1.1em;
+            color: #495057;
+            margin-top: 20px;
+        }
+        p { margin: 10px 0; }
+        code {
+            background: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            border-left: 4px solid #0d6efd;
+            margin: 15px 0;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e7f1ff;
+            color: #0a58ca;
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 10px 0; padding-left: 30px; }
+        li { margin: 5px 0; }
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        .toc h2 { margin-top: 0; border: none; }
+        .toc ul { list-style: none; padding-left: 0; }
+        .toc li { margin: 5px 0; }
+        .toc a { color: #0d6efd; text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+        .toc ul ul { padding-left: 20px; }
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .tip {
+            background: #d1e7dd;
+            border-left: 4px solid #198754;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .method-signature {
+            background: #e7f1ff;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            margin: 10px 0;
+            border-left: 4px solid #0d6efd;
+        }
+        .cover {
+            text-align: center;
+            padding: 100px 0;
+            page-break-after: always;
+        }
+        .cover h1 {
+            font-size: 3.5em;
+            border: none;
+            color: #0d6efd;
+        }
+        .cover p {
+            font-size: 1.2em;
+            color: #6c757d;
+        }
+        .cover .version {
+            display: inline-block;
+            background: #0d6efd;
+            color: #fff;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        @media print {
+            body { padding: 20px 40px; }
+            h1 { page-break-before: always; }
+            h1:first-of-type { page-break-before: avoid; }
+            pre { page-break-inside: avoid; }
+            table { page-break-inside: avoid; }
+            .method-signature { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+    <h1>T-CRUD</h1>
+    <p>Documentación completa</p>
+    <p>CRUD virtual para CodeIgniter 4 con Bootstrap 5</p>
+    <div class="version">Versión 1.0</div>
+</div>
+
+<!-- ÍNDICE -->
+<div class="toc">
+    <h2>Índice</h2>
+    <ul>
+        <li><a href="#introduccion">1. Introducción</a></li>
+        <li><a href="#instalacion">2. Instalación</a></li>
+        <li><a href="#configuracion">3. Configuración</a></li>
+        <li><a href="#uso-basico">4. Uso básico</a></li>
+        <li><a href="#api-configuracion">5. API: Métodos de configuración</a></li>
+        <li><a href="#api-campos">6. API: Métodos de campos</a></li>
+        <li><a href="#api-relaciones">7. API: Métodos de relaciones</a></li>
+        <li><a href="#api-callbacks">8. API: Callbacks</a></li>
+        <li><a href="#api-acciones">9. API: Acciones y botones</a></li>
+        <li><a href="#api-export">10. API: Exportación e inline edit</a></li>
+        <li><a href="#api-misc">11. API: Otros métodos</a></li>
+        <li><a href="#tipos-campo">12. Tipos de campo</a></li>
+        <li><a href="#ejemplos">13. Ejemplos completos</a></li>
+        <li><a href="#para-ia">14. Guía para IA</a></li>
+    </ul>
+</div>
+
+<!-- 1. INTRODUCCIÓN -->
+<h1 id="introduccion">1. Introducción</h1>
+
+<h2>¿Qué es T-CRUD?</h2>
+<p>T-CRUD es una librería para <strong>CodeIgniter 4</strong> que permite crear CRUDs (Create, Read, Update, Delete) de forma <strong>virtual</strong> y <strong>basada en configuración</strong>. En lugar de generar archivos físicos para cada tabla, se define la configuración del CRUD en un controlador y la librería se encarga de todo lo demás.</p>
+
+<h2>Características principales</h2>
+<ul>
+    <li>Listado con DataTables Server-Side (búsqueda, ordenamiento, paginación).</li>
+    <li>Filtros por columna con persistencia en sesión.</li>
+    <li>Formularios generados automáticamente según el tipo de campo.</li>
+    <li>16 tipos de campo diferentes.</li>
+    <li>Relaciones 1 a N, N a N y dependientes.</li>
+    <li>Subida de archivos e imágenes con thumbnails.</li>
+    <li>Editor de texto enriquecido (Quill).</li>
+    <li>16 callbacks para inyectar lógica personalizada.</li>
+    <li>Exportación a CSV, PDF e impresión.</li>
+    <li>Edición en línea.</li>
+    <li>Internacionalización (i18n).</li>
+    <li>Cacheo de configuración.</li>
+    <li>Soft deletes.</li>
+</ul>
+
+<h2>Requisitos</h2>
+<ul>
+    <li>PHP 8.1 o superior.</li>
+    <li>CodeIgniter 4.3 o superior.</li>
+    <li>Composer.</li>
+    <li>Base de datos MySQL / MariaDB / PostgreSQL.</li>
+    <li>Bootstrap 5 (incluido en los assets).</li>
+</ul>
+
+<!-- 2. INSTALACIÓN -->
+<h1 id="instalacion">2. Instalación</h1>
+
+<h2>Instalación vía Composer</h2>
+<pre><code>composer require tu-usuario/tcrud</code></pre>
+
+<h2>Publicar assets y configuración</h2>
+<pre><code>php spark tcrud:publish
+php spark tcrud:config</code></pre>
+
+<h2>Configurar rutas</h2>
+<p>Añade las rutas de T-CRUD en <code>app/Config/Routes.php</code>:</p>
+<pre><code>// Rutas para T-CRUD
+$tcControllers = ['Books', 'Users'];
+
+foreach ($tcControllers as $controller) {
+    $path = strtolower(str_replace('\\', '/', $controller));
+    
+    $routes->get($path, "$controller::index");
+    $routes->get("$path/tcadd", "$controller::index");
+    $routes->post("$path/tcadd", "$controller::index");
+    $routes->get("$path/tcedit/(:num)", "$controller::index");
+    $routes->post("$path/tcedit/(:num)", "$controller::index");
+    $routes->get("$path/tcdelete/(:num)", "$controller::index");
+    $routes->get("$path/tcview/(:num)", "$controller::index");
+    $routes->get("$path/tcclone/(:num)", "$controller::index");
+    $routes->post("$path/tcclone/(:num)", "$controller::index");
+    $routes->post("$path/tcbulkdelete", "$controller::index");
+    $routes->post("$path/tcfilter", "$controller::index");
+    $routes->post("$path/tcclearfilters", "$controller::index");
+    $routes->post("$path/tcexportcsv", "$controller::index");
+    $routes->post("$path/tcexportpdf", "$controller::index");
+    $routes->post("$path/tcprint", "$controller::index");
+    $routes->post("$path/tcinlineedit/(:num)", "$controller::index");
+    $routes->post("$path/tcdependent", "$controller::index");
+}</code></pre>
+
+<!-- 3. CONFIGURACIÓN -->
+<h1 id="configuracion">3. Configuración</h1>
+
+<p>El archivo <code>app/Config/TCrud.php</code> contiene la configuración global:</p>
+
+<table>
+    <thead>
+        <tr><th>Propiedad</th><th>Tipo</th><th>Default</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>language</code></td><td>string</td><td>'es'</td><td>Idioma de los textos ('es', 'en')</td></tr>
+        <tr><td><code>enableCache</code></td><td>bool</td><td>false</td><td>Habilitar cacheo de opciones</td></tr>
+        <tr><td><code>cacheTTL</code></td><td>int</td><td>3600</td><td>Tiempo de vida del caché (segundos)</td></tr>
+        <tr><td><code>cachePrefix</code></td><td>string</td><td>'tcrud_'</td><td>Prefijo de las claves de caché</td></tr>
+        <tr><td><code>coreAssetsAlreadyIncluded</code></td><td>bool</td><td>true</td><td>Si el layout ya carga Bootstrap</td></tr>
+        <tr><td><code>assets</code></td><td>array</td><td>—</td><td>URLs de los assets (CSS/JS)</td></tr>
+    </tbody>
+</table>
+
+<h2>Ejemplo de configuración completa</h2>
+<pre><code>&lt;?php
+
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class TCrud extends BaseConfig
+{
+    public bool $coreAssetsAlreadyIncluded = true;
+    public string $language = 'es';
+    public bool $enableCache = true;
+    public int $cacheTTL = 3600;
+    public string $cachePrefix = 'tcrud_';
+    public array $assets = [];
+    
+    public function __construct()
+    {
+        parent::__construct();
+        
+        $this->assets = [
+            'jquery_js' => base_url('assets/tcrud/js/jquery.min.js'),
+            'datatables_css' => base_url('assets/tcrud/css/datatables.bootstrap5.min.css'),
+            'datatables_js' => base_url('assets/tcrud/js/jquery.dataTables.min.js'),
+            'datatables_bs5' => base_url('assets/tcrud/js/dataTables.bootstrap5.min.js'),
+            'tomselect_css' => base_url('assets/tcrud/css/tom-select.bootstrap5.min.css'),
+            'tomselect_js' => base_url('assets/tcrud/js/tom-select.complete.min.js'),
+            'flatpickr_css' => base_url('assets/tcrud/css/flatpickr.min.css'),
+            'flatpickr_js' => base_url('assets/tcrud/js/flatpickr.min.js'),
+            'sweetalert2_css' => base_url('assets/tcrud/css/sweetalert2.min.css'),
+            'sweetalert2_js' => base_url('assets/tcrud/js/sweetalert2.min.js'),
+            'quill_css' => base_url('assets/tcrud/css/quill.snow.css'),
+            'quill_js' => base_url('assets/tcrud/js/quill.js'),
+            'crud_custom_css' => base_url('assets/tcrud/css/tcrud.css'),
+            'crud_custom_js' => base_url('assets/tcrud/js/tcrud.js'),
+            'bootstrap_css' => base_url('assets/tcrud/css/bootstrap.min.css'),
+            'bootstrap_js' => base_url('assets/tcrud/js/bootstrap.bundle.min.js'),
+            'bootstrap_icons' => base_url('assets/tcrud/css/bootstrap-icons.css'),
+        ];
+    }
+}</code></pre>
+
+<!-- 4. USO BÁSICO -->
+<h1 id="uso-basico">4. Uso básico</h1>
+
+<h2>Crear un controlador</h2>
+<pre><code>&lt;?php
+
+namespace App\Controllers;
+
+use App\Libraries\TCrud\CrudBuilder;
+
+class Books extends BaseController
+{
+    public function index()
+    {
+        $crud = new CrudBuilder();
+        
+        $crud->setTable('books')
+             ->setSubject('Libro', 'Libros')
+             ->columns(['id', 'title', 'author_id', 'price'])
+             ->fields(['title', 'author_id', 'price', 'description'])
+             ->displayAs([
+                 'title' => 'Título',
+                 'author_id' => 'Autor',
+                 'price' => 'Precio'
+             ])
+             ->setRelation('author_id', 'authors', 'name')
+             ->fieldType('description', 'textarea')
+             ->fieldRequired(['title', 'author_id']);
+
+        $output = $crud->render();
+
+        if (isset($output->is_json) && $output->is_json) {
+            return $this->response->setContentType('application/json')->setBody($output->output);
+        }
+        
+        if ($output instanceof \CodeIgniter\HTTP\RedirectResponse) {
+            return $output;
+        }
+
+        return view('layouts/admin', [
+            'title'     => 'Gestión de Libros',
+            'content'   => $output->output,
+            'css_files' => $output->css_files ?? [],
+            'js_files'  => $output->js_files ?? []
+        ]);
+    }
+}</code></pre>
+
+<h2>Configuración mínima</h2>
+<p>Los métodos mínimos para que un CRUD funcione son:</p>
+<ul>
+    <li><code>setTable()</code> — la tabla de la base de datos.</li>
+    <li><code>setSubject()</code> — el nombre singular y plural.</li>
+    <li><code>columns()</code> — las columnas del listado.</li>
+    <li><code>fields()</code> — los campos del formulario.</li>
+</ul>
+
+<!-- 5. API: MÉTODOS DE CONFIGURACIÓN -->
+<h1 id="api-configuracion">5. API: Métodos de configuración</h1>
+
+<h2>setTable</h2>
+<div class="method-signature">public function setTable(string $table): self</div>
+<p><strong>Descripción:</strong> Define la tabla principal de la base de datos.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$table</td><td>string</td><td>Sí</td><td>Nombre de la tabla en la BD</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code> (para encadenar)</p>
+<pre><code>$crud->setTable('books');</code></pre>
+
+<h2>setPrimaryKey</h2>
+<div class="method-signature">public function setPrimaryKey(string $key): self</div>
+<p><strong>Descripción:</strong> Define la clave primaria de la tabla. Por defecto es <code>id</code>.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$key</td><td>string</td><td>Sí</td><td>Nombre de la clave primaria</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->setPrimaryKey('book_id');</code></pre>
+
+<h2>setSubject</h2>
+<div class="method-signature">public function setSubject(string $singular, ?string $plural = null): self</div>
+<p><strong>Descripción:</strong> Define el nombre singular y plural de la entidad. Se usa en títulos y botones.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$singular</td><td>string</td><td>Sí</td><td>Nombre singular (ej. "Libro")</td></tr>
+        <tr><td>$plural</td><td>?string</td><td>No</td><td>Nombre plural. Si es null, se usa $singular . 's'</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->setSubject('Libro', 'Libros');</code></pre>
+
+<h2>columns</h2>
+<div class="method-signature">public function columns(array $columns): self</div>
+<p><strong>Descripción:</strong> Define las columnas que se muestran en el listado. El orden del array es el orden de las columnas.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$columns</td><td>array</td><td>Sí</td><td>Array de nombres de columnas</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->columns(['id', 'title', 'author_id', 'price', 'status']);</code></pre>
+
+<h2>fields</h2>
+<div class="method-signature">public function fields(array $fields): self</div>
+<p><strong>Descripción:</strong> Define los campos que se muestran en los formularios de add y edit.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$fields</td><td>array</td><td>Sí</td><td>Array de nombres de campos</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->fields(['title', 'author_id', 'price', 'description']);</code></pre>
+
+<h2>addFields</h2>
+<div class="method-signature">public function addFields(array $fields): self</div>
+<p><strong>Descripción:</strong> Define campos exclusivos para el formulario de add. Se suman a <code>fields()</code>.</p>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->addFields(['password', 'confirm_password']);</code></pre>
+
+<h2>editFields</h2>
+<div class="method-signature">public function editFields(array $fields): self</div>
+<p><strong>Descripción:</strong> Define campos exclusivos para el formulario de edit. Se suman a <code>fields()</code>.</p>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->editFields(['last_login', 'updated_by']);</code></pre>
+
+<h2>displayAs</h2>
+<div class="method-signature">public function displayAs(string|array $field, ?string $label = null): self</div>
+<p><strong>Descripción:</strong> Define etiquetas personalizadas para los campos. Acepta un string o un array asociativo.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string|array</td><td>Sí</td><td>Nombre del campo o array ['campo' => 'Etiqueta']</td></tr>
+        <tr><td>$label</td><td>?string</td><td>No</td><td>Etiqueta si $field es string</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Individual
+$crud->displayAs('title', 'Título');
+
+// En bloque
+$crud->displayAs([
+    'title' => 'Título',
+    'author_id' => 'Autor',
+    'price' => 'Precio'
+]);</code></pre>
+
+<h2>where</h2>
+<div class="method-signature">public function where(string|array $field, ?string $operator = null, $value = null): self</div>
+<p><strong>Descripción:</strong> Añade condiciones al listado. Se combinan con AND.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string|array</td><td>Sí</td><td>Campo o array ['campo' => 'valor']</td></tr>
+        <tr><td>$operator</td><td>?string</td><td>No</td><td>Operador (=, >, <, etc.). Default: '='</td></tr>
+        <tr><td>$value</td><td>mixed</td><td>No</td><td>Valor a comparar</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Forma 1: campo = valor
+$crud->where('status', 'published');
+
+// Forma 2: campo operador valor
+$crud->where('price', '>', 10);
+
+// Forma 3: array de condiciones
+$crud->where([
+    'status' => 'published',
+    'is_featured' => 1
+]);</code></pre>
+
+<h2>setValidationRules</h2>
+<div class="method-signature">public function setValidationRules(array $rules): self</div>
+<p><strong>Descripción:</strong> Define las reglas de validación de CI4 para los campos.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$rules</td><td>array</td><td>Sí</td><td>Array ['campo' => 'regla1|regla2']</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->setValidationRules([
+    'title' => 'required|min_length[3]|max_length[255]',
+    'email' => 'required|valid_email|is_unique[users.email,id,{id}]',
+    'price' => 'required|numeric|greater_than[0]'
+]);</code></pre>
+
+<h2>setValidationRule</h2>
+<div class="method-signature">public function setValidationRule(string $field, string $rules): self</div>
+<p><strong>Descripción:</strong> Define la regla de validación de un solo campo.</p>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->setValidationRule('title', 'required|min_length[3]');</code></pre>
+
+<!-- 6. API: MÉTODOS DE CAMPOS -->
+<h1 id="api-campos">6. API: Métodos de campos</h1>
+
+<h2>fieldType</h2>
+<div class="method-signature">public function fieldType(string $field, string $type, array $options = []): self</div>
+<p><strong>Descripción:</strong> Define el tipo de campo y sus opciones. Si el tipo es <code>image</code> o <code>file</code>, las opciones se guardan como configuración de subida. Si es <code>dropdown</code>, las opciones son el array de valores.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string</td><td>Sí</td><td>Nombre del campo</td></tr>
+        <tr><td>$type</td><td>string</td><td>Sí</td><td>Tipo de campo (ver sección 12)</td></tr>
+        <tr><td>$options</td><td>array</td><td>No</td><td>Opciones del campo (depende del tipo)</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+
+<h4>Ejemplo con dropdown</h4>
+<pre><code>$crud->fieldType('status', 'dropdown', [
+    'draft' => 'Borrador',
+    'published' => 'Publicado',
+    'archived' => 'Archivado'
+]);</code></pre>
+
+<h4>Ejemplo con imagen</h4>
+<pre><code>$crud->fieldType('cover_image', 'image', [
+    'upload_path' => 'uploads/books/covers/',
+    'max_size' => 2048,
+    'allowed_types' => 'jpg|png|gif|webp',
+    'thumbnail' => true,
+    'thumbnail_size' => [150, 150]
+]);</code></pre>
+
+<h4>Ejemplo con archivo</h4>
+<pre><code>$crud->fieldType('pdf_file', 'file', [
+    'upload_path' => 'uploads/books/pdfs/',
+    'max_size' => 5120,
+    'allowed_types' => 'pdf|doc|docx'
+]);</code></pre>
+
+<h4>Opciones para image/file</h4>
+<table>
+    <thead><tr><th>Opción</th><th>Tipo</th><th>Default</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td><code>upload_path</code></td><td>string</td><td>'uploads/'</td><td>Ruta de subida (relativa a FCPATH)</td></tr>
+        <tr><td><code>max_size</code></td><td>int</td><td>2048</td><td>Tamaño máximo en KB</td></tr>
+        <tr><td><code>allowed_types</code></td><td>string</td><td>—</td><td>Extensiones permitidas separadas por |</td></tr>
+        <tr><td><code>thumbnail</code></td><td>bool</td><td>true (image)</td><td>Generar thumbnail</td></tr>
+        <tr><td><code>thumbnail_size</code></td><td>array</td><td>[150, 150]</td><td>[ancho, alto] del thumbnail</td></tr>
+    </tbody>
+</table>
+
+<h2>fieldRequired</h2>
+<div class="method-signature">public function fieldRequired(string|array $fields): self</div>
+<p><strong>Descripción:</strong> Marca campos como requeridos. Añade la regla <code>required</code> de CI4 y muestra un asterisco rojo en el formulario.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$fields</td><td>string|array</td><td>Sí</td><td>Campo o array de campos</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Individual
+$crud->fieldRequired('title');
+
+// En bloque
+$crud->fieldRequired(['title', 'author_id', 'price']);</code></pre>
+
+<h2>fieldReadOnly</h2>
+<div class="method-signature">public function fieldReadOnly(string|array $fields): self</div>
+<p><strong>Descripción:</strong> Marca campos como de solo lectura. Se muestran pero no se pueden editar.</p>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->fieldReadOnly(['created_at', 'updated_at']);</code></pre>
+
+<h2>fieldDisabled</h2>
+<div class="method-signature">public function fieldDisabled(string|array $fields): self</div>
+<p><strong>Descripción:</strong> Marca campos como deshabilitados. Se muestran grises pero no se envían en el POST.</p>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->fieldDisabled(['internal_code']);</code></pre>
+
+<h2>setHidden</h2>
+<div class="method-signature">public function setHidden(string $field, $value = null, string $action = 'both'): self</div>
+<p><strong>Descripción:</strong> Oculta un campo en el formulario. Opcionalmente, fuerza un valor según la acción.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string</td><td>Sí</td><td>Nombre del campo</td></tr>
+        <tr><td>$value</td><td>mixed</td><td>No</td><td>Valor forzado. Si es null, mantiene el valor del POST</td></tr>
+        <tr><td>$action</td><td>string</td><td>No</td><td>'add', 'edit', 'clone', 'both' (default), 'all'</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Ocultar solo en add, forzando 'draft'
+$crud->setHidden('status', 'draft', 'add');
+
+// Ocultar en edit, forzando el ID del usuario logueado
+$crud->setHidden('updated_by', auth()->id(), 'edit');
+
+// Ocultar en add y edit (default)
+$crud->setHidden('tenant_id', 5);
+
+// Ocultar en todas las acciones
+$crud->setHidden('internal', null, 'all');
+
+// Ocultar manteniendo el valor del POST
+$crud->setHidden('code');</code></pre>
+
+<h2>callbackColumn</h2>
+<div class="method-signature">public function callbackColumn(string $field, callable $callback): self</div>
+<p><strong>Descripción:</strong> Define una columna virtual. El callback recibe la fila y devuelve el valor a mostrar. La columna debe estar en <code>columns()</code>.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string</td><td>Sí</td><td>Nombre de la columna virtual</td></tr>
+        <tr><td>$callback</td><td>callable</td><td>Sí</td><td>Función que recibe $row y devuelve string</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Precio con IVA
+$crud->callbackColumn('price_with_tax', function($row) {
+    return number_format($row->price * 1.21, 2) . ' €';
+});
+
+// Badge de estado
+$crud->callbackColumn('status_badge', function($row) {
+    $colors = ['draft' => 'secondary', 'published' => 'success', 'archived' => 'danger'];
+    $color = $colors[$row->status] ?? 'secondary';
+    return '<span class="badge bg-' . $color . '">' . ucfirst($row->status) . '</span>';
+});</code></pre>
+
+<h2>setRelation</h2>
+<div class="method-signature">public function setRelation(string $field, string $relatedTable, string $displayField, ?string $orderBy = null, array|callable $where = []): self</div>
+<p><strong>Descripción:</strong> Define una relación 1 a N. El campo se muestra como un dropdown con los valores de la tabla relacionada.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string</td><td>Sí</td><td>Campo FK en la tabla principal</td></tr>
+        <tr><td>$relatedTable</td><td>string</td><td>Sí</td><td>Tabla relacionada</td></tr>
+        <tr><td>$displayField</td><td>string</td><td>Sí</td><td>Campo a mostrar de la tabla relacionada</td></tr>
+        <tr><td>$orderBy</td><td>?string</td><td>No</td><td>Orden (ej. 'name ASC')</td></tr>
+        <tr><td>$where</td><td>array|callable</td><td>No</td><td>Condiciones para filtrar las opciones</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Simple
+$crud->setRelation('author_id', 'authors', 'name');
+
+// Con orden y filtro
+$crud->setRelation('category_id', 'categories', 'name', 'name ASC', ['is_active' => 1]);</code></pre>
+
+<h2>setRelationNtoN</h2>
+<div class="method-signature">public function setRelationNtoN(string $field, string $pivotTable, string $relatedTable, string $pivotPrimaryField, string $pivotRelatedField, string $displayField, ?string $orderField = null): self</div>
+<p><strong>Descripción:</strong> Define una relación N a N con tabla pivote. Se muestra como un multiselect con TomSelect.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string</td><td>Sí</td><td>Nombre del campo en el CRUD</td></tr>
+        <tr><td>$pivotTable</td><td>string</td><td>Sí</td><td>Tabla pivote</td></tr>
+        <tr><td>$relatedTable</td><td>string</td><td>Sí</td><td>Tabla relacionada</td></tr>
+        <tr><td>$pivotPrimaryField</td><td>string</td><td>Sí</td><td>Campo pivote → tabla principal</td></tr>
+        <tr><td>$pivotRelatedField</td><td>string</td><td>Sí</td><td>Campo pivote → tabla relacionada</td></tr>
+        <tr><td>$displayField</td><td>string</td><td>Sí</td><td>Campo a mostrar de la tabla relacionada</td></tr>
+        <tr><td>$orderField</td><td>?string</td><td>No</td><td>Campo de orden en la tabla pivote</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>$crud->setRelationNtoN(
+    'authors',           // Campo en el CRUD
+    'book_authors',      // Tabla pivote
+    'authors',           // Tabla relacionada
+    'book_id',           // FK pivote → books
+    'author_id',         // FK pivote → authors
+    'name',              // Campo a mostrar
+    'sort_order'         // Campo de orden (opcional)
+);</code></pre>
+
+<h2>setDependentRelation</h2>
+<div class="method-signature">public function setDependentRelation(string $field, string $dependsOn, string $relatedTable, string $displayField, string $foreignKey, array $where = []): self</div>
+<p><strong>Descripción:</strong> Define una relación dependiente. El select del campo hijo se carga vía AJAX cuando cambia el campo padre.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$field</td><td>string</td><td>Sí</td><td>Campo hijo</td></tr>
+        <tr><td>$dependsOn</td><td>string</td><td>Sí</td><td>Campo padre del que depende</td></tr>
+        <tr><td>$relatedTable</td><td>string</td><td>Sí</td><td>Tabla relacionada</td></tr>
+        <tr><td>$displayField</td><td>string</td><td>Sí</td><td>Campo a mostrar</td></tr>
+        <tr><td>$foreignKey</td><td>string</td><td>Sí</td><td>FK en la tabla relacionada</td></tr>
+        <tr><td>$where</td><td>array</td><td>No</td><td>Condiciones adicionales</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// El campo padre debe tener setRelation
+$crud->setRelation('country_id', 'countries', 'name');
+
+// El campo hijo depende del padre
+$crud->setDependentRelation(
+    'city_id',          // Campo hijo
+    'country_id',       // Depende de
+    'cities',           // Tabla relacionada
+    'name',             // Campo a mostrar
+    'country_id',       // FK en cities
+    ['is_active' => 1]  // Where opcional
+);</code></pre>
+
+<!-- 7. API: CALLBACKS -->
+<h1 id="api-callbacks">7. API: Callbacks</h1>
+
+<p>T-CRUD ofrece 16 callbacks que se ejecutan en diferentes momentos del ciclo de vida. Todos devuelven <code>$this</code> para encadenar.</p>
+
+<h2>Callbacks de inserción</h2>
+
+<h3>callbackBeforeInsert</h3>
+<div class="method-signature">public function callbackBeforeInsert(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de insertar un registro. Recibe los datos y debe devolverlos modificados.</p>
+<pre><code>$crud->callbackBeforeInsert(function($data) {
+    $data['created_at'] = date('Y-m-d H:i:s');
+    $data['created_by'] = auth()->id();
+    return $data;
+});</code></pre>
+
+<h3>callbackAfterInsert</h3>
+<div class="method-signature">public function callbackAfterInsert(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de insertar. Recibe los datos y el ID insertado.</p>
+<pre><code>$crud->callbackAfterInsert(function($data, $insertId) {
+    log_message('info', "Registro insertado con ID: $insertId");
+    // Enviar email, crear relación, etc.
+});</code></pre>
+
+<h2>Callbacks de actualización</h2>
+
+<h3>callbackBeforeUpdate</h3>
+<div class="method-signature">public function callbackBeforeUpdate(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de actualizar. Recibe los datos y el ID. Debe devolver los datos modificados.</p>
+<pre><code>$crud->callbackBeforeUpdate(function($data, $id) {
+    $data['updated_at'] = date('Y-m-d H:i:s');
+    $data['updated_by'] = auth()->id();
+    return $data;
+});</code></pre>
+
+<h3>callbackAfterUpdate</h3>
+<div class="method-signature">public function callbackAfterUpdate(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de actualizar. Recibe los datos y el ID.</p>
+<pre><code>$crud->callbackAfterUpdate(function($data, $id) {
+    log_message('info', "Registro actualizado: $id");
+});</code></pre>
+
+<h2>Callbacks de eliminación</h2>
+
+<h3>callbackBeforeDelete</h3>
+<div class="method-signature">public function callbackBeforeDelete(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de eliminar. Recibe el ID.</p>
+<pre><code>$crud->callbackBeforeDelete(function($id) {
+    log_message('info', "Eliminando registro: $id");
+});</code></pre>
+
+<h3>callbackAfterDelete</h3>
+<div class="method-signature">public function callbackAfterDelete(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de eliminar. Recibe el ID.</p>
+<pre><code>$crud->callbackAfterDelete(function($id) {
+    log_message('info', "Registro eliminado: $id");
+});</code></pre>
+
+<h2>Callbacks de archivos</h2>
+
+<h3>callbackBeforeUpload</h3>
+<div class="method-signature">public function callbackBeforeUpload(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de subir un archivo. Recibe el archivo y el campo. Puede devolver false para cancelar.</p>
+<pre><code>$crud->callbackBeforeUpload(function($file, $field) {
+    // Validar o modificar el archivo
+    if ($file->getSize() > 1000000) {
+        return false; // Cancelar
+    }
+    return $file;
+});</code></pre>
+
+<h3>callbackAfterUpload</h3>
+<div class="method-signature">public function callbackAfterUpload(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de subir. Recibe la ruta y el campo.</p>
+<pre><code>$crud->callbackAfterUpload(function($path, $field) {
+    log_message('info', "Archivo subido: $path en campo $field");
+});</code></pre>
+
+<h3>callbackBeforeDeleteFile</h3>
+<div class="method-signature">public function callbackBeforeDeleteFile(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de eliminar un archivo. Recibe la ruta.</p>
+<pre><code>$crud->callbackBeforeDeleteFile(function($path) {
+    log_message('info', "Eliminando archivo: $path");
+});</code></pre>
+
+<h3>callbackAfterDeleteFile</h3>
+<div class="method-signature">public function callbackAfterDeleteFile(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de eliminar un archivo. Recibe la ruta.</p>
+<pre><code>$crud->callbackAfterDeleteFile(function($path) {
+    log_message('info', "Archivo eliminado: $path");
+});</code></pre>
+
+<h2>Callbacks de clonación</h2>
+
+<h3>callbackBeforeClone</h3>
+<div class="method-signature">public function callbackBeforeClone(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de clonar. Recibe los datos y debe devolverlos modificados.</p>
+<pre><code>$crud->callbackBeforeClone(function($data) {
+    $data['title'] = $data['title'] . ' (copia)';
+    return $data;
+});</code></pre>
+
+<h3>callbackAfterClone</h3>
+<div class="method-signature">public function callbackAfterClone(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de clonar. Recibe los datos y el nuevo ID.</p>
+<pre><code>$crud->callbackAfterClone(function($data, $newId) {
+    log_message('info', "Registro clonado: $newId");
+});</code></pre>
+
+<h2>Callbacks de bulk delete</h2>
+
+<h3>callbackBeforeBulkDelete</h3>
+<div class="method-signature">public function callbackBeforeBulkDelete(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de eliminar varios registros. Recibe el array de IDs y debe devolverlo modificado.</p>
+<pre><code>$crud->callbackBeforeBulkDelete(function($ids) {
+    // Filtrar IDs no permitidos
+    return array_filter($ids, fn($id) => $id > 0);
+});</code></pre>
+
+<h3>callbackAfterBulkDelete</h3>
+<div class="method-signature">public function callbackAfterBulkDelete(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de eliminar varios registros. Recibe el array de IDs.</p>
+<pre><code>$crud->callbackAfterBulkDelete(function($ids) {
+    log_message('info', count($ids) . ' registros eliminados');
+});</code></pre>
+
+<h2>Callbacks de N a N</h2>
+
+<h3>callbackBeforeNtoN</h3>
+<div class="method-signature">public function callbackBeforeNtoN(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta antes de guardar las relaciones N a N. Recibe el campo, los IDs y el ID del registro. Debe devolver los IDs modificados.</p>
+<pre><code>$crud->callbackBeforeNtoN(function($field, $ids, $recordId) {
+    // Filtrar IDs válidos
+    return array_filter($ids, fn($id) => $id > 0);
+});</code></pre>
+
+<h3>callbackAfterNtoN</h3>
+<div class="method-signature">public function callbackAfterNtoN(callable $callback): self</div>
+<p><strong>Descripción:</strong> Se ejecuta después de guardar las relaciones N a N.</p>
+<pre><code>$crud->callbackAfterNtoN(function($field, $ids, $recordId) {
+    log_message('info', "Relaciones guardadas: $field");
+});</code></pre>
+
+<h2>Callbacks de columnas (columnas virtuales)</h2>
+
+<p>Se definen con <code>callbackColumn()</code> (ver sección 6). Reciben la fila y devuelven el valor a mostrar.</p>
+<pre><code>$crud->callbackColumn('full_name', function($row) {
+    return $row->first_name . ' ' . $row->last_name;
+});</code></pre>
+
+<!-- 8. API: ACCIONES Y BOTONES -->
+<h1 id="api-acciones">8. API: Acciones y botones</h1>
+
+<h2>unsetAdd</h2>
+<div class="method-signature">public function unsetAdd(): self</div>
+<p><strong>Descripción:</strong> Deshabilita el botón de añadir y la ruta <code>tcadd</code>.</p>
+<pre><code>$crud->unsetAdd();</code></pre>
+
+<h2>unsetEdit</h2>
+<div class="method-signature">public function unsetEdit(): self</div>
+<p><strong>Descripción:</strong> Deshabilita el botón de editar y la ruta <code>tcedit</code>.</p>
+<pre><code>$crud->unsetEdit();</code></pre>
+
+<h2>unsetDelete</h2>
+<div class="method-signature">public function unsetDelete(): self</div>
+<p><strong>Descripción:</strong> Deshabilita el botón de eliminar.</p>
+<pre><code>$crud->unsetDelete();</code></pre>
+
+<h2>unsetView</h2>
+<div class="method-signature">public function unsetView(): self</div>
+<p><strong>Descripción:</strong> Deshabilita el botón de ver.</p>
+<pre><code>$crud->unsetView();</code></pre>
+
+<h2>unsetClone</h2>
+<div class="method-signature">public function unsetClone(): self</div>
+<p><strong>Descripción:</strong> Deshabilita el botón de clonar.</p>
+<pre><code>$crud->unsetClone();</code></pre>
+
+<h2>addExtra</h2>
+<div class="method-signature">public function addExtra(string $label, string $icon, string $url = '', string $js = ''): self</div>
+<p><strong>Descripción:</strong> Añade un botón en la barra superior (junto a "Añadir").</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$label</td><td>string</td><td>Sí</td><td>Texto del botón</td></tr>
+        <tr><td>$icon</td><td>string</td><td>Sí</td><td>Icono de Bootstrap Icons (sin 'bi-')</td></tr>
+        <tr><td>$url</td><td>string</td><td>No</td><td>URL del botón</td></tr>
+        <tr><td>$js</td><td>string</td><td>No</td><td>Código JS a ejecutar</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Botón con URL
+$crud->addExtra('Exportar CSV', 'file-earmark-spreadsheet', 'books/export/csv');
+
+// Botón con JS
+$crud->addExtra('Imprimir', 'printer', '', 'window.print()');</code></pre>
+
+<h2>addAction</h2>
+<div class="method-signature">public function addAction(string $label, string $icon, string $url = '', string $js = ''): self</div>
+<p><strong>Descripción:</strong> Añade un botón en las acciones de cada fila (junto a editar, ver, etc.).</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$label</td><td>string</td><td>Sí</td><td>Texto del botón</td></tr>
+        <tr><td>$icon</td><td>string</td><td>Sí</td><td>Icono de Bootstrap Icons</td></tr>
+        <tr><td>$url</td><td>string</td><td>No</td><td>URL. Usa {id} para el ID del registro</td></tr>
+        <tr><td>$js</td><td>string</td><td>No</td><td>Código JS. Usa {id} para el ID</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// URL con ID
+$crud->addAction('Historial', 'clock-history', 'books/history/{id}');
+
+// JS con ID
+$crud->addAction('Duplicar', 'files', '', 'duplicateRecord({id})');</code></pre>
+
+<h2>clearOnClone</h2>
+<div class="method-signature">public function clearOnClone(array $fields): self</div>
+<p><strong>Descripción:</strong> Define campos que se limpian al clonar un registro.</p>
+<pre><code>$crud->clearOnClone(['email', 'username', 'password']);</code></pre>
+
+<!-- 9. API: EXPORTACIÓN E INLINE EDIT -->
+<h1 id="api-export">9. API: Exportación e inline edit</h1>
+
+<h2>disableExport</h2>
+<div class="method-signature">public function disableExport(): self</div>
+<p><strong>Descripción:</strong> Deshabilita la exportación (CSV y PDF). Por defecto está habilitada.</p>
+<pre><code>$crud->disableExport();</code></pre>
+
+<h2>disablePrint</h2>
+<div class="method-signature">public function disablePrint(): self</div>
+<p><strong>Descripción:</strong> Deshabilita la impresión. Por defecto está habilitada.</p>
+<pre><code>$crud->disablePrint();</code></pre>
+
+<h2>enableBulkDelete</h2>
+<div class="method-signature">public function enableBulkDelete(): self</div>
+<p><strong>Descripción:</strong> Habilita la eliminación masiva con checkboxes.</p>
+<pre><code>$crud->enableBulkDelete();</code></pre>
+
+<h2>enableInlineEdit</h2>
+<div class="method-signature">public function enableInlineEdit(array $fields = []): self</div>
+<p><strong>Descripción:</strong> Habilita la edición en línea. Si se pasan campos, solo esos son editables.</p>
+<table>
+    <thead><tr><th>Parámetro</th><th>Tipo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+    <tbody>
+        <tr><td>$fields</td><td>array</td><td>No</td><td>Campos editables. Vacío = todos</td></tr>
+    </tbody>
+</table>
+<p><strong>Retorna:</strong> <code>$this</code></p>
+<pre><code>// Todos los campos editables
+$crud->enableInlineEdit();
+
+// Solo algunos campos
+$crud->enableInlineEdit(['title', 'price', 'status']);</code></pre>
+
+<!-- 10. API: OTROS MÉTODOS -->
+<h1 id="api-misc">10. API: Otros métodos</h1>
+
+<h2>enableSoftDelete</h2>
+<div class="method-signature">public function enableSoftDelete(): self</div>
+<p><strong>Descripción:</strong> Habilita el soft delete. En lugar de borrar, marca <code>deleted_at</code>.</p>
+<pre><code>$crud->enableSoftDelete();</code></pre>
+
+<h2>clearCache</h2>
+<div class="method-signature">public function clearCache(?string $table = null): void</div>
+<p><strong>Descripción:</strong> Borra el caché de T-CRUD. Si se pasa una tabla, solo borra el de esa tabla.</p>
+<pre><code>// Borrar todo el caché de T-CRUD
+$crud->clearCache();
+
+// Borrar el caché de una tabla
+$crud->clearCache('books');</code></pre>
+
+<h2>render</h2>
+<div class="method-signature">public function render()</div>
+<p><strong>Descripción:</strong> Renderiza el CRUD. Debe ser el último método en llamarse. Devuelve un objeto con <code>output</code>, <code>css_files</code> y <code>js_files</code>, o un <code>RedirectResponse</code>.</p>
+<pre><code>$output = $crud->render();
+
+if (isset($output->is_json) && $output->is_json) {
+    return $this->response->setContentType('application/json')->setBody($output->output);
+}
+
+if ($output instanceof \CodeIgniter\HTTP\RedirectResponse) {
+    return $output;
+}
+
+return view('layouts/admin', [
+    'title' => 'Mi CRUD',
+    'content' => $output->output,
+    'css_files' => $output->css_files ?? [],
+    'js_files' => $output->js_files ?? []
+]);</code></pre>
+
+<!-- 11. TIPOS DE CAMPO -->
+<h1 id="tipos-campo">11. Tipos de campo</h1>
+
+<p>T-CRUD soporta los siguientes tipos de campo. Se configuran con <code>fieldType($field, $type, $options)</code>.</p>
+
+<h2>text</h2>
+<p>Input de texto estándar.</p>
+<pre><code>$crud->fieldType('title', 'text');</code></pre>
+<p><strong>Listado:</strong> Se muestra el valor tal cual.</p>
+<p><strong>Formulario:</strong> <code>&lt;input type="text"&gt;</code></p>
+<p><strong>Vista:</strong> Se muestra el valor escapado.</p>
+
+<h2>textarea</h2>
+<p>Área de texto multilínea.</p>
+<pre><code>$crud->fieldType('description', 'textarea');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;textarea rows="4"&gt;</code></p>
+<p><strong>Vista:</strong> Se muestra con <code>nl2br()</code> para respetar los saltos de línea.</p>
+
+<h2>dropdown</h2>
+<p>Select con opciones predefinidas.</p>
+<pre><code>$crud->fieldType('status', 'dropdown', [
+    'draft' => 'Borrador',
+    'published' => 'Publicado',
+    'archived' => 'Archivado'
+]);</code></pre>
+<p><strong>Listado:</strong> Se muestra la etiqueta (ej. "Borrador"), no el valor (ej. "draft").</p>
+<p><strong>Formulario:</strong> <code>&lt;select&gt;</code> con las opciones.</p>
+<p><strong>Vista:</strong> Se muestra la etiqueta.</p>
+
+<h2>date</h2>
+<p>Input de fecha.</p>
+<pre><code>$crud->fieldType('published_date', 'date');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="date"&gt;</code></p>
+<p><strong>Listado:</strong> Se muestra formateado como <code>dd/mm/yyyy</code>.</p>
+<p><strong>Vista:</strong> Se muestra formateado como <code>dd/mm/yyyy</code>.</p>
+
+<h2>time</h2>
+<p>Input de hora.</p>
+<pre><code>$crud->fieldType('opening_time', 'time');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="time"&gt;</code></p>
+<p><strong>Listado:</strong> Se muestra formateado como <code>HH:MM</code>.</p>
+<p><strong>Vista:</strong> Se muestra formateado como <code>HH:MM</code>.</p>
+
+<h2>datetime</h2>
+<p>Input de fecha y hora.</p>
+<pre><code>$crud->fieldType('published_at', 'datetime');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="datetime-local"&gt;</code></p>
+<p><strong>Listado:</strong> Se muestra formateado como <code>dd/mm/yyyy HH:MM</code>.</p>
+<p><strong>Vista:</strong> Se muestra formateado como <code>dd/mm/yyyy HH:MM</code>.</p>
+
+<h2>number</h2>
+<p>Input numérico.</p>
+<pre><code>$crud->fieldType('price', 'number');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="number" step="any"&gt;</code></p>
+
+<h2>email</h2>
+<p>Input de email con validación HTML5.</p>
+<pre><code>$crud->fieldType('email', 'email');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="email"&gt;</code></p>
+<p><strong>Listado:</strong> Se muestra como enlace <code>mailto:</code>.</p>
+<p><strong>Vista:</strong> Se muestra como enlace <code>mailto:</code>.</p>
+
+<h2>url</h2>
+<p>Input de URL con validación HTML5.</p>
+<pre><code>$crud->fieldType('website', 'url');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="url"&gt;</code></p>
+<p><strong>Listado:</strong> Se muestra como enlace externo.</p>
+<p><strong>Vista:</strong> Se muestra como enlace externo.</p>
+
+<h2>password</h2>
+<p>Input de contraseña.</p>
+<pre><code>$crud->fieldType('password', 'password');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="password"&gt;</code> con texto de ayuda "Dejar en blanco para no cambiar".</p>
+<p><strong>Listado:</strong> No se muestra (se excluye del listado).</p>
+<p><strong>Vista:</strong> No se muestra.</p>
+
+<h2>checkbox</h2>
+<p>Switch booleano (0/1).</p>
+<pre><code>$crud->fieldType('is_featured', 'checkbox');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="checkbox" role="switch"&gt;</code></p>
+<p><strong>Listado:</strong> Se muestra como badge "Sí" / "No".</p>
+<p><strong>Vista:</strong> Se muestra como badge "Sí" / "No".</p>
+<p><strong>Valor:</strong> Si no se marca, se guarda como 0. Si se marca, como 1.</p>
+
+<h2>color</h2>
+<p>Selector de color.</p>
+<pre><code>$crud->fieldType('brand_color', 'color');</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="color"&gt;</code></p>
+<p><strong>Listado:</strong> Se muestra un cuadro de color + el código hexadecimal.</p>
+<p><strong>Vista:</strong> Se muestra un cuadro de color + el código hexadecimal.</p>
+<p><strong>Valor:</strong> Hexadecimal (<code>#RRGGBB</code>).</p>
+
+<h2>image</h2>
+<p>Subida de imagen con thumbnail.</p>
+<pre><code>$crud->fieldType('cover_image', 'image', [
+    'upload_path' => 'uploads/books/covers/',
+    'max_size' => 2048,
+    'allowed_types' => 'jpg|png|gif|webp',
+    'thumbnail' => true,
+    'thumbnail_size' => [150, 150]
+]);</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="file" accept="image/*"&gt;</code> + previsualización del archivo actual + checkbox "Eliminar archivo actual".</p>
+<p><strong>Listado:</strong> Se muestra el thumbnail. Al hacer clic, se abre un modal con la imagen completa.</p>
+<p><strong>Vista:</strong> Se muestra la imagen con un enlace para verla en tamaño completo.</p>
+<p><strong>Valor en BD:</strong> Ruta relativa (ej. <code>uploads/books/covers/abc123.jpg</code>).</p>
+
+<h2>file</h2>
+<p>Subida de archivo genérico.</p>
+<pre><code>$crud->fieldType('pdf_file', 'file', [
+    'upload_path' => 'uploads/books/pdfs/',
+    'max_size' => 5120,
+    'allowed_types' => 'pdf|doc|docx'
+]);</code></pre>
+<p><strong>Formulario:</strong> <code>&lt;input type="file"&gt;</code> + nombre del archivo actual + checkbox "Eliminar archivo actual".</p>
+<p><strong>Listado:</strong> Se muestra un icono según la extensión. Tooltip con el nombre. Al hacer clic, se abre en nueva pestaña.</p>
+<p><strong>Vista:</strong> Se muestra un botón de descarga.</p>
+<p><strong>Valor en BD:</strong> Ruta relativa.</p>
+
+<h2>wysiwyg</h2>
+<p>Editor de texto enriquecido (Quill).</p>
+<pre><code>$crud->fieldType('description', 'wysiwyg');</code></pre>
+<p><strong>Formulario:</strong> Editor Quill con barra de herramientas (negritas, listas, enlaces, imágenes, etc.).</p>
+<p><strong>Listado:</strong> Se muestra un extracto del texto plano (sin HTML).</p>
+<p><strong>Vista:</strong> Se muestra el HTML renderizado.</p>
+<p><strong>Valor en BD:</strong> HTML sanitizado.</p>
+
+<h2>hidden</h2>
+<p>Campo oculto. Se configura con <code>setHidden()</code> (ver sección 6).</p>
+<p><strong>Formulario:</strong> No se muestra.</p>
+<p><strong>Listado:</strong> Solo se muestra si está en <code>columns()</code> y no está oculto en <code>both</code>/<code>all</code>.</p>
+
+<!-- 12. EJEMPLOS COMPLETOS -->
+<h1 id="ejemplos">12. Ejemplos completos</h1>
+
+<h2>Ejemplo 1: CRUD de Libros (básico)</h2>
+<pre><code>class Books extends BaseController
+{
+    public function index()
+    {
+        $crud = new CrudBuilder();
+        
+        $crud->setTable('books')
+             ->setSubject('Libro', 'Libros')
+             ->columns(['id', 'title', 'author_id', 'price', 'status'])
+             ->fields(['title', 'author_id', 'price', 'description', 'status'])
+             ->displayAs([
+                 'title' => 'Título',
+                 'author_id' => 'Autor',
+                 'price' => 'Precio',
+                 'description' => 'Sinopsis',
+                 'status' => 'Estado'
+             ])
+             ->setRelation('author_id', 'authors', 'name')
+             ->fieldType('description', 'textarea')
+             ->fieldType('status', 'dropdown', [
+                 'draft' => 'Borrador',
+                 'published' => 'Publicado',
+                 'archived' => 'Archivado'
+             ])
+             ->fieldRequired(['title', 'author_id', 'price'])
+             ->setValidationRules([
+                 'title' => 'required|min_length[3]|max_length[255]',
+                 'author_id' => 'required|integer|is_not_unique[authors.id]',
+                 'price' => 'required|numeric|greater_than[0]'
+             ]);
+
+        return $this->renderCrud($crud, 'Gestión de Libros');
+    }
+    
+    private function renderCrud($crud, $title)
+    {
+        $output = $crud->render();
+        
+        if (isset($output->is_json) && $output->is_json) {
+            return $this->response->setContentType('application/json')->setBody($output->output);
+        }
+        
+        if ($output instanceof \CodeIgniter\HTTP\RedirectResponse) {
+            return $output;
+        }
+        
+        return view('layouts/admin', [
+            'title' => $title,
+            'content' => $output->output,
+            'css_files' => $output->css_files ?? [],
+            'js_files' => $output->js_files ?? []
+        ]);
+    }
+}</code></pre>
+
+<h2>Ejemplo 2: CRUD de Libros (avanzado)</h2>
+<pre><code>class Books extends BaseController
+{
+    public function index()
+    {
+        $crud = new CrudBuilder();
+        
+        $crud->setTable('books')
+             ->setSubject('Libro', 'Libros')
+             ->columns([
+                 'cover_image', 'title', 'author_id', 'authors', 
+                 'category_id', 'country_id', 'city_id', 
+                 'price', 'price_with_tax', 'status', 'pdf_file'
+             ])
+             ->fields([
+                 'title', 'isbn', 'author_id', 'authors', 
+                 'category_id', 'country_id', 'city_id', 
+                 'is_featured', 'published_date', 'price', 
+                 'pages', 'description', 'status'
+             ])
+             ->addFields(['cover_image', 'pdf_file'])
+             ->editFields(['cover_image', 'pdf_file'])
+             ->displayAs([
+                 'title' => 'Título',
+                 'isbn' => 'ISBN',
+                 'author_id' => 'Autor Principal',
+                 'authors' => 'Autores',
+                 'category_id' => 'Categoría',
+                 'country_id' => 'País',
+                 'city_id' => 'Ciudad',
+                 'price' => 'Precio',
+                 'price_with_tax' => 'Precio + IVA',
+                 'status' => 'Estado',
+                 'published_date' => 'Fecha Publicación',
+                 'description' => 'Sinopsis'
+             ])
+             // Relaciones
+             ->setRelation('author_id', 'authors', 'name')
+             ->setRelation('category_id', 'categories', 'name', 'name ASC', ['is_active' => 1])
+             ->setRelation('country_id', 'countries', 'name')
+             ->setDependentRelation('city_id', 'country_id', 'cities', 'name', 'country_id')
+             ->setRelationNtoN(
+                 'authors', 'book_authors', 'authors',
+                 'book_id', 'author_id', 'name', 'sort_order'
+             )
+             // Tipos de campo
+             ->fieldType('description', 'wysiwyg')
+             ->fieldType('status', 'dropdown', [
+                 'draft' => 'Borrador',
+                 'published' => 'Publicado',
+                 'archived' => 'Archivado'
+             ])
+             ->fieldType('is_featured', 'checkbox')
+             ->fieldType('published_date', 'date')
+             ->fieldType('price', 'number')
+             ->fieldType('pages', 'number')
+             ->fieldType('cover_image', 'image', [
+                 'upload_path' => 'uploads/books/covers/',
+                 'max_size' => 2048,
+                 'allowed_types' => 'jpg|png|gif|webp',
+                 'thumbnail' => true,
+                 'thumbnail_size' => [150, 150]
+             ])
+             ->fieldType('pdf_file', 'file', [
+                 'upload_path' => 'uploads/books/pdfs/',
+                 'max_size' => 5120,
+                 'allowed_types' => 'pdf|doc|docx'
+             ])
+             // Validación
+             ->fieldRequired(['title', 'author_id', 'category_id', 'price'])
+             ->setValidationRules([
+                 'title' => 'required|min_length[3]|max_length[255]',
+                 'author_id' => 'required|integer|is_not_unique[authors.id]',
+                 'category_id' => 'required|integer|is_not_unique[categories.id]',
+                 'price' => 'required|numeric|greater_than[0]',
+                 'isbn' => 'permit_empty|min_length[10]|max_length[20]',
+                 'pages' => 'permit_empty|integer|greater_than[0]',
+                 'status' => 'permit_empty|in_list[draft,published,archived]'
+             ])
+             // Columnas virtuales
+             ->callbackColumn('price_with_tax', function($row) {
+                 return number_format($row->price * 1.21, 2) . ' €';
+             })
+             // Campos ocultos
+             ->setHidden('status', 'draft', 'add')
+             ->setHidden('created_by', auth()->id(), 'add')
+             ->setHidden('updated_by', auth()->id(), 'edit')
+             // Acciones y botones
+             ->enableBulkDelete()
+             ->enableInlineEdit(['title', 'price', 'status'])
+             ->clearOnClone(['isbn', 'cover_image', 'pdf_file'])
+             ->addAction('Historial', 'clock-history', 'books/history/{id}')
+             // Callbacks
+             ->callbackBeforeInsert(function($data) {
+                 $data['created_at'] = date('Y-m-d H:i:s');
+                 return $data;
+             })
+             ->callbackBeforeUpdate(function($data, $id) {
+                 $data['updated_at'] = date('Y-m-d H:i:s');
+                 return $data;
+             })
+             ->callbackAfterInsert(function($data, $insertId) {
+                 log_message('info', "Libro insertado: $insertId");
+             })
+             ->callbackBeforeDelete(function($id) {
+                 log_message('info', "Eliminando libro: $id");
+             })
+             // Condiciones
+             ->where('deleted_at', null);
+
+        return $this->renderCrud($crud, 'Gestión de Libros');
+    }
+}</code></pre>
+
+<h2>Ejemplo 3: CRUD de Usuarios con roles N a N</h2>
+<pre><code>class Users extends BaseController
+{
+    public function index()
+    {
+        $crud = new CrudBuilder();
+        
+        $crud->setTable('users')
+             ->setSubject('Usuario', 'Usuarios')
+             ->columns(['id', 'username', 'email', 'roles', 'status', 'created_at'])
+             ->fields(['username', 'email', 'password', 'roles', 'status'])
+             ->addFields(['password', 'confirm_password'])
+             ->editFields(['password'])
+             ->displayAs([
+                 'username' => 'Usuario',
+                 'email' => 'Correo',
+                 'password' => 'Contraseña',
+                 'roles' => 'Roles',
+                 'status' => 'Estado'
+             ])
+             ->setRelationNtoN(
+                 'roles', 'user_roles', 'roles',
+                 'user_id', 'role_id', 'name'
+             )
+             ->fieldType('password', 'password')
+             ->fieldType('status', 'dropdown', [
+                 'active' => 'Activo',
+                 'inactive' => 'Inactivo',
+                 'banned' => 'Baneado'
+             ])
+             ->fieldRequired(['username', 'email'])
+             ->setValidationRules([
+                 'username' => 'required|min_length[3]|is_unique[users.username,id,{id}]',
+                 'email' => 'required|valid_email|is_unique[users.email,id,{id}]',
+                 'password' => 'permit_empty|min_length[6]'
+             ])
+             ->callbackBeforeInsert(function($data) {
+                 if (!empty($data['password'])) {
+                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                 }
+                 unset($data['confirm_password']);
+                 $data['created_at'] = date('Y-m-d H:i:s');
+                 return $data;
+             })
+             ->callbackBeforeUpdate(function($data, $id) {
+                 if (!empty($data['password'])) {
+                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                 } else {
+                     unset($data['password']);
+                 }
+                 unset($data['confirm_password']);
+                 $data['updated_at'] = date('Y-m-d H:i:s');
+                 return $data;
+             })
+             ->clearOnClone(['username', 'email', 'password'])
+             ->enableBulkDelete();
+
+        return $this->renderCrud($crud, 'Gestión de Usuarios');
+    }
+}</code></pre>
+
+<h2>Ejemplo 4: CRUD de Productos con imágenes</h2>
+<pre><code>class Products extends BaseController
+{
+    public function index()
+    {
+        $crud = new CrudBuilder();
+        
+        $crud->setTable('products')
+             ->setSubject('Producto', 'Productos')
+             ->columns(['image', 'name', 'category_id', 'price', 'stock', 'is_active'])
+             ->fields(['name', 'category_id', 'price', 'stock', 'description', 'is_active'])
+             ->addFields(['image'])
+             ->editFields(['image'])
+             ->displayAs([
+                 'name' => 'Nombre',
+                 'category_id' => 'Categoría',
+                 'price' => 'Precio',
+                 'stock' => 'Stock',
+                 'description' => 'Descripción',
+                 'is_active' => '¿Activo?',
+                 'image' => 'Imagen'
+             ])
+             ->setRelation('category_id', 'categories', 'name')
+             ->fieldType('description', 'wysiwyg')
+             ->fieldType('is_active', 'checkbox')
+             ->fieldType('price', 'number')
+             ->fieldType('stock', 'number')
+             ->fieldType('image', 'image', [
+                 'upload_path' => 'uploads/products/',
+                 'max_size' => 3072,
+                 'allowed_types' => 'jpg|png|webp',
+                 'thumbnail' => true,
+                 'thumbnail_size' => [200, 200]
+             ])
+             ->fieldRequired(['name', 'category_id', 'price'])
+             ->where('deleted_at', null);
+
+        return $this->renderCrud($crud, 'Gestión de Productos');
+    }
+}</code></pre>
+
+<!-- 13. GUÍA PARA IA -->
+<h1 id="para-ia">13. Guía para IA</h1>
+
+<div class="tip">
+    <strong>Nota:</strong> Esta sección está diseñada para que una IA pueda entender y usar T-CRUD sin ambigüedad.
+</div>
+
+<h2>Instalación</h2>
+<pre><code>composer require tu-usuario/tcrud
+php spark tcrud:publish
+php spark tcrud:config</code></pre>
+
+<h2>Estructura de un controlador</h2>
+<pre><code>use App\Libraries\TCrud\CrudBuilder;
+
+class {Entity} extends BaseController
+{
+    public function index()
+    {
+        $crud = new CrudBuilder();
+        
+        $crud->setTable('{table}')
+             ->setSubject('{Singular}', '{Plural}')
+             ->columns([...])
+             ->fields([...])
+             // ... configuración ...
+        
+        $output = $crud->render();
+        
+        if (isset($output->is_json) && $output->is_json) {
+            return $this->response->setContentType('application/json')->setBody($output->output);
+        }
+        
+        if ($output instanceof \CodeIgniter\HTTP\RedirectResponse) {
+            return $output;
+        }
+        
+        return view('layouts/admin', [
+            'title' => '{Title}',
+            'content' => $output->output,
+            'css_files' => $output->css_files ?? [],
+            'js_files' => $output->js_files ?? []
+        ]);
+    }
+}</code></pre>
+
+<h2>Lista completa de métodos (resumen)</h2>
+
+<table>
+    <thead><tr><th>Método</th><th>Parámetros</th><th>Propósito</th></tr></thead>
+    <tbody>
+        <tr><td><code>setTable</code></td><td>string $table</td><td>Tabla principal</td></tr>
+        <tr><td><code>setPrimaryKey</code></td><td>string $key</td><td>Clave primaria</td></tr>
+        <tr><td><code>setSubject</code></td><td>string $singular, ?string $plural</td><td>Nombre de la entidad</td></tr>
+        <tr><td><code>columns</code></td><td>array $columns</td><td>Columnas del listado</td></tr>
+        <tr><td><code>fields</code></td><td>array $fields</td><td>Campos del formulario</td></tr>
+        <tr><td><code>addFields</code></td><td>array $fields</td><td>Campos de add</td></tr>
+        <tr><td><code>editFields</code></td><td>array $fields</td><td>Campos de edit</td></tr>
+        <tr><td><code>displayAs</code></td><td>string|array $field, ?string $label</td><td>Etiquetas</td></tr>
+        <tr><td><code>fieldType</code></td><td>string $field, string $type, array $options</td><td>Tipo de campo</td></tr>
+        <tr><td><code>fieldRequired</code></td><td>string|array $fields</td><td>Campos requeridos</td></tr>
+        <tr><td><code>fieldReadOnly</code></td><td>string|array $fields</td><td>Solo lectura</td></tr>
+        <tr><td><code>fieldDisabled</code></td><td>string|array $fields</td><td>Deshabilitados</td></tr>
+        <tr><td><code>setRelation</code></td><td>field, table, display, ?order, where</td><td>Relación 1 a N</td></tr>
+        <tr><td><code>setRelationNtoN</code></td><td>field, pivot, related, pivotPrimary, pivotRelated, display, ?orderField</td><td>Relación N a N</td></tr>
+        <tr><td><code>setDependentRelation</code></td><td>field, dependsOn, table, display, foreignKey, where</td><td>Relación dependiente</td></tr>
+        <tr><td><code>setHidden</code></td><td>field, value, action</td><td>Campo oculto</td></tr>
+        <tr><td><code>where</code></td><td>field, ?operator, value</td><td>Condiciones</td></tr>
+        <tr><td><code>callbackColumn</code></td><td>field, callable</td><td>Columna virtual</td></tr>
+        <tr><td><code>setValidationRules</code></td><td>array $rules</td><td>Validación en bloque</td></tr>
+        <tr><td><code>setValidationRule</code></td><td>field, rules</td><td>Validación individual</td></tr>
+        <tr><td><code>enableBulkDelete</code></td><td>—</td><td>Bulk delete</td></tr>
+        <tr><td><code>enableInlineEdit</code></td><td>array $fields</td><td>Edición en línea</td></tr>
+        <tr><td><code>enableSoftDelete</code></td><td>—</td><td>Soft delete</td></tr>
+        <tr><td><code>disableExport</code></td><td>—</td><td>Deshabilitar export</td></tr>
+        <tr><td><code>disablePrint</code></td><td>—</td><td>Deshabilitar print</td></tr>
+        <tr><td><code>unsetAdd</code></td><td>—</td><td>Deshabilitar add</td></tr>
+        <tr><td><code>unsetEdit</code></td><td>—</td><td>Deshabilitar edit</td></tr>
+        <tr><td><code>unsetDelete</code></td><td>—</td><td>Deshabilitar delete</td></tr>
+        <tr><td><code>unsetView</code></td><td>—</td><td>Deshabilitar view</td></tr>
+        <tr><td><code>unsetClone</code></td><td>—</td><td>Deshabilitar clone</td></tr>
+        <tr><td><code>addExtra</code></td><td>label, icon, url, js</td><td>Botón superior</td></tr>
+        <tr><td><code>addAction</code></td><td>label, icon, url, js</td><td>Botón de fila</td></tr>
+        <tr><td><code>clearOnClone</code></td><td>array $fields</td><td>Limpiar al clonar</td></tr>
+        <tr><td><code>render</code></td><td>—</td><td>Renderizar</td></tr>
+    </tbody>
+</table>
+
+<h2>Callbacks (resumen)</h2>
+
+<table>
+    <thead><tr><th>Callback</th><th>Recibe</th><th>Devuelve</th></tr></thead>
+    <tbody>
+        <tr><td><code>callbackBeforeInsert</code></td><td>$data</td><td>$data</td></tr>
+        <tr><td><code>callbackAfterInsert</code></td><td>$data, $insertId</td><td>void</td></tr>
+        <tr><td><code>callbackBeforeUpdate</code></td><td>$data, $id</td><td>$data</td></tr>
+        <tr><td><code>callbackAfterUpdate</code></td><td>$data, $id</td><td>void</td></tr>
+        <tr><td><code>callbackBeforeDelete</code></td><td>$id</td><td>void</td></tr>
+        <tr><td><code>callbackAfterDelete</code></td><td>$id</td><td>void</td></tr>
+        <tr><td><code>callbackBeforeUpload</code></td><td>$file, $field</td><td>$file|false</td></tr>
+        <tr><td><code>callbackAfterUpload</code></td><td>$path, $field</td><td>void</td></tr>
+        <tr><td><code>callbackBeforeDeleteFile</code></td><td>$path</td><td>void</td></tr>
+        <tr><td><code>callbackAfterDeleteFile</code></td><td>$path</td><td>void</td></tr>
+        <tr><td><code>callbackBeforeClone</code></td><td>$data</td><td>$data</td></tr>
+        <tr><td><code>callbackAfterClone</code></td><td>$data, $newId</td><td>void</td></tr>
+        <tr><td><code>callbackBeforeBulkDelete</code></td><td>$ids</td><td>$ids</td></tr>
+        <tr><td><code>callbackAfterBulkDelete</code></td><td>$ids</td><td>void</td></tr>
+        <tr><td><code>callbackBeforeNtoN</code></td><td>$field, $ids, $recordId</td><td>$ids</td></tr>
+        <tr><td><code>callbackAfterNtoN</code></td><td>$field, $ids, $recordId</td><td>void</td></tr>
+    </tbody>
+</table>
+
+<h2>Reglas de uso para IA</h2>
+<ol>
+    <li><strong>Siempre</strong> llamar a <code>render()</code> al final.</li>
+    <li><strong>Siempre</strong> manejar los 3 tipos de salida: JSON, RedirectResponse y HTML.</li>
+    <li>Los métodos fluidos devuelven <code>$this</code>, se pueden encadenar.</li>
+    <li>Las rutas deben estar definidas en <code>Routes.php</code> (ver sección 2).</li>
+    <li>El idioma se configura en <code>TCrud.php</code>.</li>
+    <li>Los assets se publican con <code>php spark tcrud:publish</code>.</li>
+    <li>La configuración se copia con <code>php spark tcrud:config</code>.</li>
+    <li>Las relaciones N a N requieren tabla pivote con FK a ambas tablas.</li>
+    <li>Las relaciones dependientes requieren que el padre tenga <code>setRelation()</code>.</li>
+    <li>Los callbacks que modifican datos deben devolver el dato modificado.</li>
+</ol>
+
+<h2>Ejemplo mínimo para IA</h2>
+<pre><code>$crud = new CrudBuilder();
+$crud->setTable('books')
+     ->setSubject('Libro', 'Libros')
+     ->columns(['id', 'title'])
+     ->fields(['title']);
+$output = $crud->render();</code></pre>
+
+<h2>Ejemplo con relaciones para IA</h2>
+<pre><code>$crud = new CrudBuilder();
+$crud->setTable('books')
+     ->setSubject('Libro', 'Libros')
+     ->columns(['id', 'title', 'author_id', 'category_id'])
+     ->fields(['title', 'author_id', 'category_id', 'description'])
+     ->setRelation('author_id', 'authors', 'name')
+     ->setRelation('category_id', 'categories', 'name')
+     ->fieldType('description', 'textarea')
+     ->fieldRequired(['title', 'author_id']);
+$output = $crud->render();</code></pre>
+
+<h2>Tipos de campo (referencia rápida)</h2>
+<ul>
+    <li><code>text</code> — texto corto</li>
+    <li><code>textarea</code> — texto largo</li>
+    <li><code>dropdown</code> — select con opciones (array asociativo)</li>
+    <li><code>date</code> — fecha</li>
+    <li><code>time</code> — hora</li>
+    <li><code>datetime</code> — fecha y hora</li>
+    <li><code>number</code> — número</li>
+    <li><code>email</code> — email</li>
+    <li><code>url</code> — URL</li>
+    <li><code>password</code> — contraseña</li>
+    <li><code>checkbox</code> — booleano</li>
+    <li><code>color</code> — color hex</li>
+    <li><code>image</code> — subida de imagen (requiere options)</li>
+    <li><code>file</code> — subida de archivo (requiere options)</li>
+    <li><code>wysiwyg</code> — editor Quill</li>
+    <li><code>hidden</code> — oculto (configurar con setHidden)</li>
+</ul>
+
+<hr>
+<p style="text-align: center; color: #6c757d; margin-top: 50px;">
+    T-CRUD — Documentación Completa v1.0<br>
+    Generado para CodeIgniter 4
+</p>
+
+</body>
+</html>
